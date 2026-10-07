@@ -342,7 +342,7 @@ const PORTFOLIO = {
              'Players choose their own items, Mega and Tera.',
              'Next: modifiers such as shiny chance, type changes and stat switching.'],
       links:[{label:'Source', href:'https://github.com/JakeA-UKSBS/Poke-Randomiser'}] },
-    { name:'MTG Draft Sim', slug:'mtg-draft-sim', kind:'side', type:'Draft simulator', art:'draft', shots:[],
+    { name:'MTG Draft Sim', slug:'mtg-draft-sim', kind:'side', type:'Draft simulator', art:'draft', shots:[], keepArt:true,
       blurb:'A Magic: The Gathering draft simulator with bot opponents filling the empty seats.',
       stack:['HTML','JavaScript','MTGJSON'],
       notes:['Real card data from MTGJSON.',
@@ -417,7 +417,7 @@ $('#projectlist').innerHTML = PORTFOLIO.projects.map((p, i) => {
   const under = hasShots(p)
     ? (p.shots.length > 1 ? `<div class="thumbs" data-thumbs="${i}">${p.shots.map((s, n) =>
         `<button type="button" data-src="${s}" aria-pressed="${n === 0}" aria-label="Show screenshot ${n + 1} of ${p.name}"><img src="${s}" alt=""></button>`).join('')}</div>` : '')
-    : `<label class="drop" for="shot-${i}"><input class="sr" type="file" accept="image/*" id="shot-${i}" data-drop="${i}"><span id="drop-note-${i}">Screenshot slot. Drop an image here or click to try one.</span><span class="ph">placeholder</span></label>`;
+    : p.keepArt ? '' : `<label class="drop" for="shot-${i}"><input class="sr" type="file" accept="image/*" id="shot-${i}" data-drop="${i}"><span id="drop-note-${i}">Screenshot slot. Drop an image here or click to try one.</span><span class="ph">placeholder</span></label>`;
   return `<li class="proj${i % 2 ? ' rev' : ''}" id="p-${i}" data-kind="${p.kind}">
     <figure class="frame proj-shot" data-p="${i}">
       <div class="frame-bar">${DOTS}<span class="addr">${p.slug}</span></div>
