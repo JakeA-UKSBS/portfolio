@@ -1,6 +1,9 @@
-Portfolio/ github page
+# Portfolio
 
-https://jakea-uksbs.github.io/portfolio.github.io/
+Personal portfolio for Jake Ashton, Senior Developer.
 
-Work & personal projects
+**Live site:** https://jakea-uksbs.github.io/portfolio.github.io/
 
+## What's here
+
+Work and personal projects, tech stack, experience and contact details.
