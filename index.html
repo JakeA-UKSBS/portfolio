@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Jake Ashton, Senior Developer. Full-stack work in SvelteKit, Node.js and Oracle integrations, plus side projects.">
+<title>Jake's Portfolio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+/* Layout: headline on the left, a collage of project windows on the right.
+   Then one large browser-window frame per project (a screenshot slot) beside
+   its write-up, followed by the stack and experience. */
+/* One committed look: black-green ground, green accent, gold second,
+   with the five card colours as small pips on the stack rows. */
+:root{
+  color-scheme:dark;
+  --bg:#0B100D; --surface:#131B16; --ink:#E9EFE6; --muted:#93A396;
+  --line:#4F6657; --shadow:#030504; --dot:#16201A;
+  --accent:#45B978; --on-accent:#06140C; --second:#D9B45B; --on-second:#1C1503;
+  --sky:#101812; --hill:#27382D;
+  --m-w:#F2EBCF; --m-u:#3F8FD6; --m-b:#1B1A1E; --m-r:#D5503F; --m-g:#3E9E63;
+  --display:"Sora","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  background:var(--bg);
+  background-image:radial-gradient(var(--dot) 1.5px,transparent 1.5px);
+  background-size:22px 22px;
+  color:var(--ink); font:400 1rem/1.6 var(--body);
+}
+.wrap{max-width:1120px;margin-inline:auto;padding-inline:20px}
+h1,h2,h3,p,ul,ol,figure,dl,dd{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+.label{font:500 .78rem/1.2 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.ph{display:inline-block;font:500 .66rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  padding:.3em .55em;border:1.5px dashed var(--line);border-radius:99px;color:var(--muted);vertical-align:middle}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:.5em;font:600 .98rem/1 var(--body);text-decoration:none;cursor:pointer;
+  color:var(--on-accent);background:var(--accent);border:2.5px solid var(--line);border-radius:12px;padding:.85em 1.2em;
+  box-shadow:4px 4px 0 var(--shadow);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--shadow)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--shadow)}
+.btn.alt{background:var(--surface);color:var(--ink)}
+.btn.small{padding:.6em .9em;font-size:.88rem;border-radius:10px}
+
+/* Header */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:22px}
+.logo{font:500 1.05rem/1 var(--mono);background:var(--ink);color:var(--bg);padding:.6em .8em;border-radius:8px;text-decoration:none}
+.logo b{font-weight:500;opacity:.55}
+.nav{display:flex;gap:6px 20px;flex-wrap:wrap}
+.nav a{font:500 .8rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:.5em 0;
+  border-bottom:2.5px solid transparent}
+.nav a:hover{border-bottom-color:var(--accent)}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center;padding-block:32px 72px}
+.hero h1{font:800 clamp(2.3rem,5.2vw,3.9rem)/1.06 var(--display);letter-spacing:-.03em;text-wrap:balance;margin-top:14px}
+.hero h1 mark{background:var(--accent);color:var(--on-accent);padding:0 .16em;border-radius:.16em}
+.hero .lede{font-size:1.12rem;max-width:34em;margin-top:22px}
+.hero .lede b{font-weight:600}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+
+/* Browser-window frame, used for the hero collage and each project */
+.frame{background:var(--surface);border:2.5px solid var(--line);border-radius:14px;box-shadow:6px 6px 0 var(--shadow);overflow:hidden;min-width:0}
+.frame-bar{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:2.5px solid var(--line);background:var(--sky)}
+.dots{display:flex;gap:5px;flex:none}
+.dots i{width:10px;height:10px;border-radius:50%;border:2px solid var(--line)}
+.dots i:nth-child(1){background:var(--second)} .dots i:nth-child(2){background:var(--hill)} .dots i:nth-child(3){background:var(--accent)}
+.addr{flex:1;min-width:0;font:500 .74rem/1.2 var(--mono);color:var(--muted);background:var(--surface);
+  border:1.5px solid var(--line);border-radius:99px;padding:.35em .9em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.screen{aspect-ratio:16/10;max-width:100%;background:var(--sky)}
+.screen svg,.screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.drop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 12px;border-top:2.5px dashed var(--line);
+  font:500 .78rem/1.3 var(--mono);color:var(--muted);cursor:pointer}
+.drop:hover{background:var(--sky)}
+.drop:focus-within{outline:3px solid var(--accent);outline-offset:-3px}
+.frame.over{outline:4px solid var(--accent);outline-offset:3px}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px;border-top:2.5px solid var(--line)}
+.thumbs button{width:72px;aspect-ratio:16/10;padding:0;border:2px solid var(--line);border-radius:6px;overflow:hidden;cursor:pointer;background:var(--sky)}
+.thumbs button[aria-pressed="true"]{outline:3px solid var(--accent);outline-offset:1px}
+.thumbs img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+
+/* Hero collage */
+.collage{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding-bottom:26px}
+.tile{display:block;text-decoration:none;transition:transform .15s}
+.tile:nth-child(even){transform:translateY(26px)}
+.tile:hover{transform:translateY(-4px)}
+.tile:nth-child(even):hover{transform:translateY(22px)}
+.tile .frame{box-shadow:5px 5px 0 var(--shadow);border-radius:12px}
+.tile .frame-bar{padding:7px 10px;gap:8px}
+.tile .dots i{width:8px;height:8px}
+.tile .addr{border:0;background:none;padding:0;color:var(--ink)}
+
+/* Sections */
+section{padding-block:56px 8px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:16px 24px;flex-wrap:wrap;margin-bottom:32px}
+.sec-head h2{font:700 clamp(1.8rem,3.8vw,2.5rem)/1.05 var(--display);letter-spacing:-.025em;margin-top:8px}
+
+/* Filters */
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{font:500 .8rem/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;cursor:pointer;
+  color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:99px;padding:.6em 1em}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+/* Project rows */
+.projects{display:grid;gap:64px}
+.proj{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:center;scroll-margin-top:24px}
+.proj.rev{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}
+.proj.rev .proj-shot{order:2}
+.proj-text{display:flex;flex-direction:column;gap:14px;min-width:0}
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.kind{font:500 .68rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  padding:.45em .7em;border:2px solid var(--line);border-radius:99px;white-space:nowrap}
+.kind-side{background:var(--second);color:var(--on-second)} .kind-work{background:var(--accent);color:var(--on-accent)}
+.type{font:500 .76rem/1.2 var(--mono);color:var(--muted)}
+.proj h3{font:700 clamp(1.5rem,3vw,2rem)/1.1 var(--display);letter-spacing:-.025em;text-wrap:balance}
+.blurb{font-size:1.05rem;line-height:1.55;max-width:38em}
+.notes{display:grid;gap:7px;font-size:.96rem;line-height:1.45}
+.notes li{padding-left:1.1em;position:relative}
+.notes li::before{content:"";position:absolute;left:0;top:.55em;width:.5em;height:.5em;background:var(--accent);border-radius:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips li{font:500 .74rem/1 var(--mono);padding:.5em .65em;border:1.5px solid var(--line);border-radius:6px;background:var(--surface)}
+.chips li.empty{border-style:dashed;color:var(--muted);background:none}
+.links{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.86rem;color:var(--muted);margin-top:4px}
+
+/* SVG stand-in art fills */
+.f-sky{fill:var(--sky)} .f-hill{fill:var(--hill)} .f-ink{fill:var(--ink)} .f-surface{fill:var(--surface)}
+.f-a{fill:var(--accent)} .f-b{fill:var(--second)} .f-c{fill:var(--hill)} .f-none{fill:none}
+.s-ink{stroke:var(--line);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.s-dash{stroke-dasharray:1 7}
+.qm{font:700 20px var(--display);text-anchor:middle;fill:var(--ink)}
+.qm.inv{fill:var(--on-accent)} .qm.w{fill:var(--on-second)}
+
+/* Stack: one sheet, a row per layer */
+.sheet{background:var(--surface);border:2.5px solid var(--line);border-radius:16px;box-shadow:6px 6px 0 var(--shadow);overflow:hidden}
+.layer{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:10px 28px;align-items:center;padding:18px 22px}
+.layer + .layer{border-top:1.5px solid var(--line)}
+.layer h3{font:700 1.1rem/1.2 var(--display);letter-spacing:-.02em;display:flex;align-items:center;gap:.55em;flex-wrap:wrap}
+.pip{flex:none;width:.72em;height:.72em;border-radius:50%;border:1.5px solid var(--line);background:var(--m-w)}
+.layer:nth-child(5n+2) .pip{background:var(--m-u)} .layer:nth-child(5n+3) .pip{background:var(--m-b)}
+.layer:nth-child(5n+4) .pip{background:var(--m-r)} .layer:nth-child(5n+5) .pip{background:var(--m-g)}
+.layer .what{font:500 .76rem/1.4 var(--mono);color:var(--muted);margin-top:4px}
+.layer .chips li{font-size:.82rem;padding:.6em .8em;background:var(--bg)}
+.layer .chips li.empty{background:none}
+
+/* About */
+.about{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:40px;align-items:start}
+.photo{aspect-ratio:4/5;max-width:100%;border:2.5px dashed var(--line);border-radius:16px;background:var(--sky);overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);font:500 .8rem/1.3 var(--mono)}
+.photo.has{border-style:solid}
+.photo img{display:block;width:100%;height:100%;object-fit:cover}
+.photo .initial{font:800 4.5rem/1 var(--display);color:var(--hill)}
+.bio{display:grid;gap:14px;font-size:1.08rem;line-height:1.6;max-width:62ch}
+.bits{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:26px}
+.bit{border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--surface);min-width:0}
+.bit.open{border-style:dashed;background:none}
+.bit dt{font:500 .72rem/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.bit dd{margin-top:6px;font-weight:500}
+.bit.open dd{color:var(--muted);font-weight:400}
+
+/* Experience */
+.roles{display:grid;gap:22px;max-width:720px;border-left:2.5px solid var(--line);padding-left:26px;margin-left:8px}
+.role{position:relative}
+.role::before{content:"";position:absolute;left:-35.5px;top:.35em;width:16px;height:16px;border-radius:50%;
+  background:var(--accent);border:2.5px solid var(--line)}
+.role.open::before{background:var(--bg);border-style:dashed}
+.role h3{font:600 1.15rem/1.3 var(--body)}
+.role .when{font:500 .78rem/1.4 var(--mono);color:var(--muted);letter-spacing:.04em}
+.role ul{margin-top:8px;display:grid;gap:5px;font-size:.97rem;max-width:65ch}
+.role li{padding-left:1.1em;position:relative}
+.role li::before{content:"+";position:absolute;left:0;font-family:var(--mono);color:var(--accent)}
+.role.open h3,.role.open p{color:var(--muted);font-weight:500}
+
+/* Contact */
+.contact{margin-block:72px 40px;background:var(--ink);color:var(--bg);border:2.5px solid var(--line);border-radius:22px;
+  box-shadow:7px 7px 0 var(--accent);padding:36px clamp(20px,5vw,48px);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:center}
+.contact h2{font:700 clamp(1.7rem,3.8vw,2.5rem)/1.08 var(--display);letter-spacing:-.025em;text-wrap:balance}
+.contact p{margin-top:12px;max-width:30em}
+.contact .ways{display:grid;gap:12px;justify-items:start}
+.mail{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font:500 .9rem/1.3 var(--mono);
+  padding:.7em .9em;border:2px dashed var(--bg);border-radius:10px;max-width:100%;overflow-wrap:anywhere}
+.mail.has{border-style:solid}
+.mail .ph{border-color:var(--bg);color:var(--bg)}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:minmax(0,1fr);gap:32px;padding-block:12px 48px}
+  .proj,.proj.rev{grid-template-columns:minmax(0,1fr);gap:22px}
+  .proj.rev .proj-shot{order:0}
+  .projects{gap:52px}
+  .contact{grid-template-columns:minmax(0,1fr)}
+  .about{grid-template-columns:minmax(0,1fr);gap:26px}
+  .photo{max-width:220px}
+}
+@media (max-width:620px){
+  .layer{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion: reduce){
+  .btn,.tile{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#top" aria-label="Jake, back to top"><b>~/</b>jake</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#projects">Projects</a>
+      <a href="#stack">Stack</a>
+      <a href="#experience">Experience</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div>
+        <p class="label">Senior Developer · Full-stack</p>
+        <h1>I make modern front ends <mark>talk</mark> to legacy systems.</h1>
+        <p class="lede">Senior Developer at <b>UK Shared Business Services</b>. SvelteKit and Node.js up front, Oracle and IBM webMethods behind, with the odd browser game on the side.</p>
+        <div class="cta">
+          <a class="btn" href="#projects">See the projects</a>
+          <a class="btn alt" id="gh-hero" href="https://github.com/JakeA-UKSBS" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <div class="collage" id="collage"></div>
+    </div>
+  </main>
+
+  <section id="projects">
+    <div class="sec-head">
+      <div>
+        <p class="label">Selected work</p>
+        <h2>Projects</h2>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Filter projects">
+        <button type="button" data-f="all" aria-pressed="true">All</button>
+        <button type="button" data-f="work" aria-pressed="false">Work</button>
+        <button type="button" data-f="side" aria-pressed="false">Side projects</button>
+      </div>
+    </div>
+    <ul class="projects" id="projectlist"></ul>
+  </section>
+
+  <section id="stack">
+    <div class="sec-head">
+      <div>
+        <p class="label">Tools I reach for</p>
+        <h2>Stack</h2>
+      </div>
+    </div>
+    <div class="sheet" id="kits"></div>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head">
+      <div>
+        <p class="label">Where I've been</p>
+        <h2>Experience</h2>
+      </div>
+    </div>
+    <ol class="roles" id="rolelist"></ol>
+  </section>
+
+  <section id="about">
+    <div class="sec-head">
+      <div>
+        <p class="label">Personal bits</p>
+        <h2>About me</h2>
+      </div>
+    </div>
+    <div class="about">
+      <div class="photo" id="photo"></div>
+      <div>
+        <div class="bio" id="bio"></div>
+        <dl class="bits" id="bits"></dl>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact" id="contact">
+    <div>
+      <h2>Got something that needs building or connecting?</h2>
+      <p>Happy to talk SvelteKit, integrations, or side projects.</p>
+    </div>
+    <div class="ways">
+      <a class="btn" id="gh-foot" href="https://github.com/JakeA-UKSBS" target="_blank" rel="noopener">Find me on GitHub</a>
+      <div class="mail" id="mail"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- Everything you'd want to edit lives here ----------
+   shots: image files published alongside this page, first one is the main
+   visual, e.g. shots:['shots/daoist-duels-1.png','shots/daoist-duels-2.png'].
+   While shots is empty the illustrated stand-in shows instead. */
+const PORTFOLIO = {
+  github: 'https://github.com/JakeA-UKSBS',
+  email: 'jakeinmyboot@gmail.com',
+  projects: [
+    { name:'Super-Connect', slug:'super-connect', kind:'work', type:'Employee portal', art:'portal', shots:[],
+      blurb:'A modern employee portal replacing a legacy Oracle system for UK government organisations.',
+      stack:['SvelteKit','Node.js','Okta SAML','Oracle EBS'],
+      notes:['Full-stack: Svelte components, server endpoints and API integration.',
+             'Absence calendars, team pages, notifications and profile cards.',
+             'Oracle EBS and Fusion through an IBM webMethods gateway.'],
+      linkNote:'Internal project' },
+    { name:'OIA Forms Portal &amp; SAML2 Identity Service', slug:'oia-forms-portal', kind:'work', type:'Forms and sign-in', art:'forms', shots:[],
+      blurb:'The forms catalogue and its form models, plus an overhaul of the identity solution to support SAML2.',
+      stack:['Oracle Intelligent Advisor','C#','.NET','EF Core','Okta','SAML2'],
+      notes:['Designed and built a new landing page for the forms catalogue.',
+             'Form models in C# and .NET using EF Core and dependency injection, including updates for statutory changes.',
+             'Overhauled the identity solution to support SAML2 within existing Okta and licensing constraints.'],
+      linkNote:'Internal project' },
+    { name:'Daoist Duels', slug:'daoist-duels', kind:'side', type:'Real-time multiplayer', art:'duel', shots:[],
+      blurb:'A browser artillery game where each player joins a shared room from their own device.',
+      stack:['Node.js','Socket.io','Canvas'],
+      notes:['Started in Godot, then moved to the browser so anyone can join from a link.',
+             'Real-time rooms over Socket.io with a vanilla canvas renderer.',
+             'Hosted on Render.'],
+      links:[{label:'Source', href:'https://github.com/JakeA-UKSBS/daoist-duels'}] },
+    { name:'Starter Draft Showdown', slug:'starter-draft-showdown', kind:'side', type:'Draft engine', art:'starter', shots:[],
+      blurb:'A Pokémon PvP draft format: random starters, rolled abilities, seven picks, then a best of three.',
+      stack:['JavaScript','GitHub Pages'],
+      notes:['Static site, no backend.',
+             'Players choose their own items, Mega and Tera.',
+             'Next: modifiers such as shiny chance, type changes and stat switching.'],
+      links:[{label:'Source', href:'https://github.com/JakeA-UKSBS/Poke-Randomiser'}] },
+    { name:'MTG Draft Sim', slug:'mtg-draft-sim', kind:'side', type:'Draft simulator', art:'draft', shots:[],
+      blurb:'A Magic: The Gathering draft simulator with bot opponents filling the empty seats.',
+      stack:['HTML','JavaScript','MTGJSON'],
+      notes:['Real card data from MTGJSON.',
+             'Bot opponents, a deckbuilding phase and a single-elimination bracket.',
+             'Next: online multiplayer.'],
+      links:[] },
+    { name:'Dyslexicon', slug:'dyslexicon', kind:'side', type:'Chrome extension', art:'ext', shots:[],
+      blurb:'A Chrome extension.',
+      stack:['Chrome extension'],
+      notes:[],
+      links:[] }
+  ],
+  stack: [
+    { title:'Frontend',         what:'What people see and click',               items:['Svelte','SvelteKit','Vue.js','Tailwind CSS','Bootstrap','shadcn-svelte','HTML canvas'] },
+    { title:'Backend',          what:'Servers, sockets and APIs',               items:['Node.js','Express','C#','.NET','EF Core','Java','Spring Boot','Kotlin','Python','Socket.io'] },
+    { title:'Data',             what:'Where it all gets stored',                items:['SQL','MongoDB','Sequelize'] },
+    { title:'Integration',      what:'Getting enterprise systems to cooperate', items:['Oracle EBS','Oracle Fusion','Oracle Intelligent Advisor','IBM webMethods','Okta','SAML2','OAuth'] },
+    { title:'Tools &amp; delivery', what:'Building, shipping and hosting',          items:['Git','Docker','CI/CD pipelines','Maven','SAFe Agile','GitHub Pages','Render'] }
+  ],
+  about: {
+    photo: '', // an image file published alongside this page
+    bio: ['I\'m Jake Ashton, a Senior Developer at UK Shared Business Services, where I\'ve worked since 2022.',
+          'I enjoy problem solving and looking at how processes can be improved.'],
+    bits: [
+      { label:'Based in', value:'Swindon' },
+      { label:'Degree', value:'BSc (Hons) Software Engineering, First Class. Southampton Solent University.' }
+    ]
+  },
+  roles: [
+    { title:'Senior Developer, UK Shared Business Services', when:'Oct 2022 to now',
+      points:['Core full-stack contributor to Super-Connect (Connect 2.0), the employee portal replacing legacy Oracle Connect.',
+              'Authentication integrations using Okta and SAML for the new portal.',
+              'A new landing page for the forms catalogue, and form models in C# and .NET with EF Core.',
+              'Automated the joiners and leavers process through an integration spanning multiple development teams.',
+              'Overhauled the identity solution to support SAML2.'] },
+    { title:'BSc (Hons) Software Engineering, Southampton Solent University', when:'2018 to 2022',
+      points:['First Class.'] },
+    { title:'Purchasing Agent, Salisbury Glass Centre', when:'Nov 2013 to Sep 2018',
+      points:['Sourced materials for installation projects and managed supplier relationships.'] }
+  ]
+};
+
+/* ---------- Stand-in art, shown until a project has screenshots ---------- */
+const ART = {
+  ext:`<svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect class="f-sky" width="160" height="100"/><rect class="f-surface s-ink" x="16" y="13" width="128" height="74" rx="6"/><path class="f-ink" d="M16 19a6 6 0 0 1 6-6h116a6 6 0 0 1 6 6v7H16z"/><rect class="f-c s-ink" x="26" y="37" width="50" height="6" rx="3"/><rect class="f-c s-ink" x="26" y="50" width="62" height="6" rx="3"/><rect class="f-c s-ink" x="26" y="63" width="42" height="6" rx="3"/><rect class="f-a s-ink" x="98" y="36" width="36" height="36" rx="6"/><text class="qm inv" x="116" y="61">Aa</text></svg>`,
+  forms:`<svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect class="f-sky" width="160" height="100"/><rect class="f-surface s-ink" x="20" y="12" width="78" height="76" rx="6"/><rect class="f-c s-ink" x="30" y="24" width="58" height="10" rx="3"/><rect class="f-c s-ink" x="30" y="42" width="58" height="10" rx="3"/><rect class="f-a s-ink" x="30" y="62" width="30" height="14" rx="4"/><path class="f-b s-ink" d="M124 26L142 33V48C142 60 134 68 124 72C114 68 106 60 106 48V33Z"/><path class="f-none s-ink" d="M116 49L122 55L133 43"/></svg>`,
+  duel:`<svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect class="f-sky" width="160" height="100"/><circle class="f-b" cx="128" cy="22" r="11"/><path class="f-hill s-ink" d="M-4 104V78L28 52L50 74L76 34L106 78L126 60L164 88V104Z"/><path class="f-none s-ink s-dash" d="M24 50Q80 -24 134 56"/><circle class="f-c s-ink" cx="24" cy="50" r="6"/><circle class="f-a s-ink" cx="134" cy="56" r="6"/></svg>`,
+  starter:`<svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect class="f-sky" width="160" height="100"/><g transform="rotate(-10 45 55)"><rect class="f-a s-ink" x="28" y="28" width="34" height="50" rx="5"/><text class="qm inv" x="45" y="60">?</text></g><g transform="rotate(10 115 55)"><rect class="f-c s-ink" x="98" y="28" width="34" height="50" rx="5"/><text class="qm" x="115" y="60">?</text></g><rect class="f-b s-ink" x="63" y="20" width="34" height="50" rx="5"/><text class="qm w" x="80" y="52">?</text></svg>`,
+  draft:`<svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect class="f-sky" width="160" height="100"/><g><rect class="f-surface s-ink" x="38" y="30" width="28" height="42" rx="4" transform="rotate(-28 52 110)"/><rect class="f-a s-ink" x="38" y="30" width="28" height="42" rx="4" transform="rotate(-14 52 110)"/><rect class="f-surface s-ink" x="38" y="30" width="28" height="42" rx="4" transform="rotate(0 52 110)"/><rect class="f-b s-ink" x="38" y="30" width="28" height="42" rx="4" transform="rotate(14 52 110)"/><rect class="f-c s-ink" x="38" y="30" width="28" height="42" rx="4" transform="rotate(28 52 110)"/></g><path class="f-none s-ink" d="M106 22H122V40H106M106 60H122V78H106M122 31H138V69H122M138 50H152"/></svg>`,
+  portal:`<svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect class="f-sky" width="160" height="100"/><rect class="f-surface s-ink" x="16" y="13" width="128" height="74" rx="6"/><path class="f-ink" d="M16 19a6 6 0 0 1 6-6h116a6 6 0 0 1 6 6v7H16z"/><rect class="f-a s-ink" x="25" y="34" width="33" height="20" rx="3"/><rect class="f-b s-ink" x="63.500" y="34" width="33" height="20" rx="3"/><rect class="f-c s-ink" x="102" y="34" width="33" height="20" rx="3"/><rect class="f-hill s-ink" x="25" y="60" width="71.500" height="19" rx="3"/><rect class="f-hill s-ink" x="102" y="60" width="33" height="19" rx="3"/></svg>`
+};
+const KIND = { work:'Work', side:'Side project' };
+const DOTS = '<span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>';
+
+const $ = (s, r=document) => r.querySelector(s);
+const hasShots = p => p.shots && p.shots.length > 0;
+const screen = (p, i) => `<div class="screen" data-screen="${i}">${hasShots(p) ? `<img src="${p.shots[0]}" alt="${p.name} screenshot">` : (ART[p.art] || '')}</div>`;
+
+/* ---------- Render ---------- */
+$('#gh-hero').href = $('#gh-foot').href = PORTFOLIO.github;
+
+$('#collage').innerHTML = PORTFOLIO.projects.slice(0, 4).map((p, i) =>
+  `<a class="tile" href="#p-${i}" aria-label="${p.name}"><div class="frame"><div class="frame-bar">${DOTS}<span class="addr">${p.name}</span></div>${screen(p, i)}</div></a>`
+).join('');
+
+$('#projectlist').innerHTML = PORTFOLIO.projects.map((p, i) => {
+  const links = (p.links && p.links.length)
+    ? p.links.map(l => `<a class="btn small alt" href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`).join('')
+    : (p.linkNote ? `<span>${p.linkNote}</span>` : `<span>Link goes here</span> <span class="ph">placeholder</span>`);
+  const under = hasShots(p)
+    ? (p.shots.length > 1 ? `<div class="thumbs" data-thumbs="${i}">${p.shots.map((s, n) =>
+        `<button type="button" data-src="${s}" aria-pressed="${n === 0}" aria-label="Show screenshot ${n + 1} of ${p.name}"><img src="${s}" alt=""></button>`).join('')}</div>` : '')
+    : `<label class="drop" for="shot-${i}"><input class="sr" type="file" accept="image/*" id="shot-${i}" data-drop="${i}"><span id="drop-note-${i}">Screenshot slot. Drop an image here or click to try one.</span><span class="ph">placeholder</span></label>`;
+  return `<li class="proj${i % 2 ? ' rev' : ''}" id="p-${i}" data-kind="${p.kind}">
+    <figure class="frame proj-shot" data-p="${i}">
+      <div class="frame-bar">${DOTS}<span class="addr">${p.slug}</span></div>
+      ${screen(p, i)}
+      ${under}
+    </figure>
+    <div class="proj-text">
+      <div class="meta"><span class="kind kind-${p.kind}">${KIND[p.kind]}</span><span class="type">${p.type}</span></div>
+      <h3>${p.name}</h3>
+      <p class="blurb">${p.blurb}</p>
+      ${p.notes.length ? `<ul class="notes">${p.notes.map(n => `<li>${n}</li>`).join('')}</ul>` : `<p class="type">Add what it does and your part in it <span class="ph">placeholder</span></p>`}
+      <ul class="chips">${p.stack.map(s => `<li>${s}</li>`).join('')}</ul>
+      <div class="links">${links}</div>
+    </div>
+  </li>`;
+}).join('');
+
+$('#kits').innerHTML = PORTFOLIO.stack.map(k => {
+  const chips = k.items.length ? k.items.map(s => `<li>${s}</li>`).join('')
+    : `<li class="empty">${k.empty}</li>`;
+  return `<div class="layer"><div><h3><span class="pip" aria-hidden="true"></span>${k.title}${k.items.length ? '' : ' <span class="ph">placeholder</span>'}</h3>${k.what ? `<p class="what">${k.what}</p>` : ''}</div><ul class="chips">${chips}</ul></div>`;
+}).join('');
+
+const ABOUT = PORTFOLIO.about;
+if (ABOUT.photo) $('#photo').classList.add('has');
+$('#photo').innerHTML = ABOUT.photo ? `<img src="${ABOUT.photo}" alt="Jake">`
+  : `<span class="initial" aria-hidden="true">J</span><span>Photo slot</span><span class="ph">placeholder</span>`;
+$('#bio').innerHTML = ABOUT.bio.map(p => `<p>${p}</p>`).join('');
+$('#bits').innerHTML = ABOUT.bits.map(b =>
+  `<div class="bit${b.open ? ' open' : ''}"><dt>${b.label}${b.open ? ' <span class="ph">placeholder</span>' : ''}</dt><dd>${b.value}</dd></div>`
+).join('');
+
+$('#rolelist').innerHTML = PORTFOLIO.roles.map(r => r.open
+  ? `<li class="role open"><p class="when">${r.when} <span class="ph">placeholder</span></p><h3>${r.title}</h3><p>${r.note}</p></li>`
+  : `<li class="role"><p class="when">${r.when}</p><h3>${r.title}</h3><ul>${r.points.map(p => `<li>${p}</li>`).join('')}</ul></li>`
+).join('');
+
+const mail = $('#mail');
+if (PORTFOLIO.email) {
+  mail.classList.add('has');
+  mail.innerHTML = `<span id="mail-text">${PORTFOLIO.email}</span><button class="btn small alt" type="button" id="copy-mail">Copy</button>`;
+  $('#copy-mail').addEventListener('click', e => {
+    const btn = e.currentTarget;
+    const done = () => { btn.textContent = 'Copied'; };
+    const select = () => { const r = document.createRange(); r.selectNodeContents($('#mail-text')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+    try { navigator.clipboard.writeText(PORTFOLIO.email).then(done, select); } catch (_) { select(); }
+  });
+} else {
+  mail.innerHTML = `<span>Email goes here</span><span class="ph">placeholder</span>`;
+}
+
+/* ---------- Filter ---------- */
+$('#filters').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  document.querySelectorAll('#filters button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  document.querySelectorAll('#projectlist .proj').forEach(s => { s.hidden = !(b.dataset.f === 'all' || s.dataset.kind === b.dataset.f); });
+});
+
+/* ---------- Screenshots: thumbnails, and local try-out for empty slots ---------- */
+function show(i, src) {
+  document.querySelectorAll(`[data-screen="${i}"]`).forEach(s => {
+    const img = new Image(); img.src = src; img.alt = PORTFOLIO.projects[i].name + ' screenshot';
+    s.replaceChildren(img);
+  });
+}
+function tryOut(i, file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  show(i, URL.createObjectURL(file));
+  const note = $('#drop-note-' + i);
+  if (note) note.textContent = 'Previewing in this browser only. Not saved.';
+}
+const list = $('#projectlist');
+list.addEventListener('click', e => {
+  const b = e.target.closest('.thumbs button'); if (!b) return;
+  const wrap = b.closest('.thumbs');
+  wrap.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  show(wrap.dataset.thumbs, b.dataset.src);
+});
+list.addEventListener('change', e => { if (e.target.dataset.drop) tryOut(e.target.dataset.drop, e.target.files[0]); });
+list.addEventListener('dragover', e => { const f = e.target.closest('.frame[data-p]'); if (f) { e.preventDefault(); f.classList.add('over'); } });
+list.addEventListener('dragleave', e => { const f = e.target.closest('.frame[data-p]'); if (f && !f.contains(e.relatedTarget)) f.classList.remove('over'); });
+list.addEventListener('drop', e => {
+  const f = e.target.closest('.frame[data-p]'); if (!f) return;
+  e.preventDefault(); f.classList.remove('over');
+  tryOut(f.dataset.p, e.dataTransfer.files[0]);
+});
+</script>
+</body>
+</html>
