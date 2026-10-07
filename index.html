@@ -229,7 +229,7 @@ section{padding-block:56px 8px}
       <div>
         <p class="label">Senior Developer · Full-stack</p>
         <h1>I make modern front ends <mark>talk</mark> to legacy systems.</h1>
-        <p class="lede">Senior Developer at <b>UK Shared Business Services</b>. SvelteKit and Node.js up front, Oracle and IBM webMethods behind, with the odd browser game on the side.</p>
+        <p class="lede">Senior Developer at <b>UKSBS</b>. SvelteKit and Node.js up front, Oracle and IBM webMethods behind, with the odd browser game on the side.</p>
         <div class="cta">
           <a class="btn" href="#projects">See the projects</a>
           <a class="btn alt" id="gh-hero" href="https://github.com/JakeA-UKSBS" target="_blank" rel="noopener">GitHub</a>
@@ -332,7 +332,7 @@ const PORTFOLIO = {
              'Real-time rooms over Socket.io with a vanilla canvas renderer.',
              'Hosted on Render.',
              'Screenshot shows an early build.'],
-      links:[{label:'Source', href:'https://github.com/JakeA-UKSBS/daoist-duels'}] },
+      links:[] },
     { name:'Starter Draft Showdown', slug:'starter-draft-showdown', kind:'side', type:'Draft engine', art:'starter', shots:['shots/starter-draft-showdown-1.png'],
       blurb:'A Pokémon PvP draft format: random starters, rolled abilities, seven picks, then a best of three.',
       stack:['JavaScript','GitHub Pages'],
@@ -340,13 +340,12 @@ const PORTFOLIO = {
              'Standard, Mega and Doubles best-of-three modes.',
              'Players choose their own items, Mega and Tera.',
              'Next: modifiers such as shiny chance, type changes and stat switching.'],
-      links:[{label:'Source', href:'https://github.com/JakeA-UKSBS/Poke-Randomiser'}] },
+      links:[] },
     { name:'MTG Draft Sim', slug:'mtg-draft-sim', kind:'side', type:'Draft simulator', art:'draft', shots:[], keepArt:true,
-      blurb:'A Magic: The Gathering draft simulator with bot opponents filling the empty seats.',
+      blurb:'A Magic: The Gathering draft simulator.',
       stack:['HTML','JavaScript','MTGJSON'],
       notes:['Real card data from MTGJSON.',
-             'Bot opponents, a deckbuilding phase and a single-elimination bracket.',
-             'Next: online multiplayer.'],
+             'Bot opponents, a deckbuilding phase and a single-elimination bracket.'],
       links:[] },
     /* Hidden until the uni work turns up. Remove this comment to show it again.
     { name:'Dyslexicon', slug:'dyslexicon', kind:'side', type:'Chrome extension', art:'ext', shots:[],
@@ -357,7 +356,7 @@ const PORTFOLIO = {
     */
   ],
   stack: [
-    { title:'Frontend',         what:'What people see and click',               items:['Svelte','SvelteKit','Vue.js','Tailwind CSS','Bootstrap','shadcn-svelte','HTML canvas'] },
+    { title:'Frontend',         what:'What people see and click',               items:['Svelte','SvelteKit','Vue.js','Tailwind CSS','Bootstrap','shadcn-svelte'] },
     { title:'Backend',          what:'Servers, sockets and APIs',               items:['Node.js','Express','C#','.NET','EF Core','Java','Spring Boot','Kotlin','Python','Socket.io'] },
     { title:'Data',             what:'Where it all gets stored',                items:['SQL','MongoDB','Sequelize'] },
     { title:'Integration',      what:'Getting enterprise systems to cooperate', items:['Oracle EBS','Oracle Fusion','Oracle Intelligent Advisor','IBM webMethods','Okta','SAML2','OAuth'] },
@@ -365,9 +364,8 @@ const PORTFOLIO = {
   ],
   about: {
     photo: 'images/jake.jpg',
-    bio: ['I\'m Jake Ashton, a Senior Developer at UK Shared Business Services.',
+    bio: ['I\'m Jake Ashton, a Senior Developer at UKSBS.',
           'I started getting into development while working in procurement, where I realised there were a bunch of systems that could be automated and improved. That led me to a Software Engineering degree, and I now work in the automation and application process improvement team at UKSBS.',
-          'I enjoy problem solving and looking at how processes can be improved.',
           'Outside work I\'m interested in game development and building side projects.'],
     bits: [
       { label:'Based in', value:'Swindon' },
@@ -415,7 +413,7 @@ $('#collage').innerHTML = PORTFOLIO.projects.slice(0, 4).map((p, i) =>
 $('#projectlist').innerHTML = PORTFOLIO.projects.map((p, i) => {
   const links = (p.links && p.links.length)
     ? p.links.map(l => `<a class="btn small alt" href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`).join('')
-    : (p.linkNote ? `<span>${p.linkNote}</span>` : `<span>Link goes here</span> <span class="ph">placeholder</span>`);
+    : (p.linkNote ? `<span>${p.linkNote}</span>` : '');
   const under = hasShots(p)
     ? (p.shots.length > 1 ? `<div class="thumbs" data-thumbs="${i}">${p.shots.map((s, n) =>
         `<button type="button" data-src="${s}" aria-pressed="${n === 0}" aria-label="Show screenshot ${n + 1} of ${p.name}"><img src="${s}" alt=""></button>`).join('')}</div>` : '')
@@ -432,7 +430,7 @@ $('#projectlist').innerHTML = PORTFOLIO.projects.map((p, i) => {
       <p class="blurb">${p.blurb}</p>
       ${p.notes.length ? `<ul class="notes">${p.notes.map(n => `<li>${n}</li>`).join('')}</ul>` : `<p class="type">Add what it does and your part in it <span class="ph">placeholder</span></p>`}
       <ul class="chips">${p.stack.map(s => `<li>${s}</li>`).join('')}</ul>
-      <div class="links">${links}</div>
+      ${links ? `<div class="links">${links}</div>` : ''}
     </div>
   </li>`;
 }).join('');
