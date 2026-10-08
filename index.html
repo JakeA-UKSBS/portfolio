@@ -377,7 +377,7 @@ const PORTFOLIO = {
       notes:['Real card data from MTGJSON.',
              'A deckbuilding phase and a single-elimination bracket.'],
       links:[] },
-    { name:'Dyslexicon', slug:'dyslexicon', kind:'side', type:'Chrome extension', art:'ext', shots:['shots/dyslexicon-1.png'],
+    { name:'Dyslexicon', slug:'dyslexicon', kind:'side', badge:'Uni dissertation', type:'Chrome extension', art:'ext', shots:['shots/dyslexicon-1.png'],
       blurb:'A Chrome extension that reads any web page aloud and restyles its text to make it easier to read.',
       stack:['Chrome extension','JavaScript','Text-to-speech'],
       notes:['Built at university in 2022 to improve on the reading extensions around at the time, with more accessible options.',
@@ -457,7 +457,7 @@ $('#projectlist').innerHTML = PORTFOLIO.projects.map((p, i) => {
       ${under}
     </figure>
     <div class="proj-text">
-      <div class="meta"><span class="kind kind-${p.kind}">${KIND[p.kind]}</span><span class="type">${p.type}</span></div>
+      <div class="meta"><span class="kind kind-${p.kind}">${p.badge || KIND[p.kind]}</span><span class="type">${p.type}</span></div>
       <h3>${p.name}</h3>
       <p class="blurb">${p.blurb}</p>
       ${p.notes.length ? `<ul class="notes">${p.notes.map(n => `<li>${n}</li>`).join('')}</ul>` : `<p class="type">Add what it does and your part in it <span class="ph">placeholder</span></p>`}
