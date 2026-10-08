@@ -82,6 +82,7 @@ a{color:inherit}
   border:1.5px solid var(--line);border-radius:99px;padding:.35em .9em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .screen{aspect-ratio:16/10;max-width:100%;background:var(--sky)}
 .screen svg,.screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.screen img.contain{object-fit:contain;object-position:center;padding:12px}
 .drop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 12px;border-top:2.5px dashed var(--line);
   font:500 .78rem/1.3 var(--mono);color:var(--muted);cursor:pointer}
 .drop:hover{background:var(--sky)}
@@ -154,6 +155,11 @@ section{padding-block:56px 8px}
 .layer .what{font:500 .76rem/1.4 var(--mono);color:var(--muted);margin-top:4px}
 .layer .chips li{font-size:.82rem;padding:.6em .8em;background:var(--bg)}
 .layer .chips li.empty{background:none}
+
+/* GitHub activity */
+.sec-head .sub{font:500 .8rem/1.4 var(--mono);color:var(--muted)}
+.activity{overflow-x:auto}
+.activity img{display:block;width:844px;min-width:620px;max-width:100%;height:auto;border-radius:8px}
 
 /* About */
 .about{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:40px;align-items:start}
@@ -273,6 +279,19 @@ section{padding-block:56px 8px}
       </div>
     </div>
     <div class="sheet" id="kits"></div>
+  </section>
+
+  <section id="activity">
+    <div class="sec-head">
+      <div>
+        <p class="label">On GitHub</p>
+        <h2>Activity</h2>
+      </div>
+      <p class="sub">615 contributions in 2026, January to October</p>
+    </div>
+    <figure class="activity">
+      <img src="images/github-activity.png" alt="GitHub contribution graph for 2026, with 615 contributions between January and October" width="844" height="180">
+    </figure>
   </section>
 
   <section id="experience">
@@ -416,7 +435,7 @@ const DOTS = '<span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
 
 const $ = (s, r=document) => r.querySelector(s);
 const hasShots = p => p.shots && p.shots.length > 0;
-const screen = (p, i) => `<div class="screen" data-screen="${i}">${hasShots(p) ? `<img src="${p.shots[0]}" alt="${p.name} screenshot">` : (ART[p.art] || '')}</div>`;
+const screen = (p, i) => `<div class="screen" data-screen="${i}">${hasShots(p) ? `<img src="${p.shots[0]}" alt="${p.name} screenshot"${p.fit === 'contain' ? ' class="contain"' : ''}>` : (ART[p.art] || '')}</div>`;
 
 /* ---------- Render ---------- */
 $('#gh-hero').href = $('#gh-foot').href = PORTFOLIO.github;
