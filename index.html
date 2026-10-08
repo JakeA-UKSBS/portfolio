@@ -169,15 +169,16 @@ section{padding-block:56px 8px}
 .bit dt{font:500 .72rem/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .bit dd{margin-top:6px;font-weight:500}
 .bit.open dd{color:var(--muted);font-weight:400}
-.cats{margin-top:30px}
-.cats h3{font:700 1.1rem/1.2 var(--display);letter-spacing:-.02em;margin-bottom:12px}
-.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,320px));gap:14px}
+.about-side{display:grid;gap:22px;align-content:start;min-width:0}
+.cats{min-width:0}
+.cats h3{font:500 .72rem/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.cat-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
 .cat{display:grid;gap:8px;min-width:0}
 .cat .pic{aspect-ratio:1;max-width:100%;border:2px dashed var(--line);border-radius:14px;background:var(--sky);overflow:hidden;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);font:500 .74rem/1.2 var(--mono)}
 .cat .pic.has{border-style:solid}
 .cat .pic img{display:block;width:100%;height:100%;object-fit:cover}
-.cat figcaption{font-weight:600}
+.cat figcaption{font-size:.9rem;font-weight:600}
 
 /* Experience */
 .roles{display:grid;gap:22px;max-width:720px;border-left:2.5px solid var(--line);padding-left:26px;margin-left:8px}
@@ -211,7 +212,7 @@ section{padding-block:56px 8px}
   .projects{gap:52px}
   .contact{grid-template-columns:minmax(0,1fr)}
   .about{grid-template-columns:minmax(0,1fr);gap:26px}
-  .photo{max-width:220px}
+  .about-side{max-width:220px}
 }
 @media (max-width:620px){
   .layer{grid-template-columns:minmax(0,1fr)}
@@ -292,11 +293,13 @@ section{padding-block:56px 8px}
       </div>
     </div>
     <div class="about">
-      <div class="photo" id="photo"></div>
+      <div class="about-side">
+        <div class="photo" id="photo"></div>
+        <div class="cats" id="cats"></div>
+      </div>
       <div>
         <div class="bio" id="bio"></div>
         <dl class="bits" id="bits"></dl>
-        <div class="cats" id="cats"></div>
       </div>
     </div>
   </section>
@@ -355,15 +358,16 @@ const PORTFOLIO = {
       blurb:'A Magic: The Gathering draft simulator.',
       stack:['HTML','JavaScript','MTGJSON'],
       notes:['Real card data from MTGJSON.',
-             'Bot opponents, a deckbuilding phase and a single-elimination bracket.'],
+             'A deckbuilding phase and a single-elimination bracket.'],
       links:[] },
-    /* Hidden until the uni work turns up. Remove this comment to show it again.
-    { name:'Dyslexicon', slug:'dyslexicon', kind:'side', type:'Chrome extension', art:'ext', shots:[],
-      blurb:'A Chrome extension.',
-      stack:['Chrome extension'],
-      notes:[],
+    { name:'Dyslexicon', slug:'dyslexicon', kind:'side', type:'Chrome extension', art:'ext', shots:['shots/dyslexicon-1.png'],
+      blurb:'A Chrome extension that reads any web page aloud and restyles its text to make it easier to read.',
+      stack:['Chrome extension','JavaScript','Text-to-speech'],
+      notes:['Built at university in 2022 to improve on the reading extensions around at the time, with more accessible options.',
+             'Read-aloud with a choice of voice, rate and pitch, plus play, pause and text-size controls on the page.',
+             'Change the font, highlight colour and background colour on any site.',
+             'Still has a small user base today.'],
       links:[] }
-    */
   ],
   stack: [
     { title:'Frontend',         what:'What people see and click',               items:['Svelte','SvelteKit','Vue.js','Tailwind CSS','Bootstrap','shadcn-svelte'] },
