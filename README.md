@@ -2,7 +2,7 @@
 
 Personal portfolio for Jake Ashton, Senior Developer.
 
-**Live site:** https://jakea-uksbs.github.io/portfolio.github.io/
+**Live site:** https://jakea-uksbs.github.io/portfolio
 
 ## What's here
 
