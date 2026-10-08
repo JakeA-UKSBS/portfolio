@@ -82,6 +82,7 @@ a{color:inherit}
   border:1.5px solid var(--line);border-radius:99px;padding:.35em .9em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .screen{aspect-ratio:16/10;max-width:100%;background:var(--sky)}
 .screen svg,.screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.screen img.contain{object-fit:contain;object-position:center;padding:12px}
 .drop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 12px;border-top:2.5px dashed var(--line);
   font:500 .78rem/1.3 var(--mono);color:var(--muted);cursor:pointer}
 .drop:hover{background:var(--sky)}
@@ -360,7 +361,7 @@ const PORTFOLIO = {
       notes:['Real card data from MTGJSON.',
              'A deckbuilding phase and a single-elimination bracket.'],
       links:[] },
-    { name:'Dyslexicon', slug:'dyslexicon', kind:'side', type:'Chrome extension', art:'ext', shots:['shots/dyslexicon-1.png'],
+    { name:'Dyslexicon', slug:'dyslexicon', kind:'side', type:'Chrome extension', art:'ext', shots:['shots/dyslexicon-1.png'], fit:'contain',
       blurb:'A Chrome extension that reads any web page aloud and restyles its text to make it easier to read.',
       stack:['Chrome extension','JavaScript','Text-to-speech'],
       notes:['Built at university in 2022 to improve on the reading extensions around at the time, with more accessible options.',
@@ -416,7 +417,7 @@ const DOTS = '<span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
 
 const $ = (s, r=document) => r.querySelector(s);
 const hasShots = p => p.shots && p.shots.length > 0;
-const screen = (p, i) => `<div class="screen" data-screen="${i}">${hasShots(p) ? `<img src="${p.shots[0]}" alt="${p.name} screenshot">` : (ART[p.art] || '')}</div>`;
+const screen = (p, i) => `<div class="screen" data-screen="${i}">${hasShots(p) ? `<img src="${p.shots[0]}" alt="${p.name} screenshot"${p.fit === 'contain' ? ' class="contain"' : ''}>` : (ART[p.art] || '')}</div>`;
 
 /* ---------- Render ---------- */
 $('#gh-hero').href = $('#gh-foot').href = PORTFOLIO.github;
